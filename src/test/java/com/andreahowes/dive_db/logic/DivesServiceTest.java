@@ -1,6 +1,7 @@
 package com.andreahowes.dive_db.logic;
 
 import com.andreahowes.dive_db.data.dives.MySqlDiveRepository;
+import com.andreahowes.dive_db.logic.SecurityModule.User;
 import com.andreahowes.dive_db.logic.dive.Dive;
 import com.andreahowes.dive_db.logic.dive.DivesService;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,23 +19,24 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class DivesServiceTest {
-    private final static String LOCATION = "Bull shark dive";
-    private final static LocalDate DATE = LocalDate.of(2014, Month.JANUARY, 1);
-    private DivesService divesService;
-    private MySqlDiveRepository mySqlDiveRepositoryMock;
-    private Dive dive1;
-    private Dive dive2;
-    private Dive diveFromRepository;
-    private List<Dive> diveList = new ArrayList<>();
-    private int dive2Id = 2;
-    private int dive3Id = 3;
-    //private User user;
+    final static String LOCATION = "Bull shark dive";
+    final static LocalDate DATE = LocalDate.of(2014, Month.JANUARY, 1);
+    DivesService divesService;
+    MySqlDiveRepository mySqlDiveRepositoryMock;
+    Dive dive1;
+    Dive dive2;
+    Dive diveFromRepository;
+    List<Dive> diveList = new ArrayList<>();
+    int dive2Id = 2;
+    int dive3Id = 3;
+    User user;
 
     @BeforeEach
     public void setUp() {
+
         mySqlDiveRepositoryMock = Mockito.mock(MySqlDiveRepository.class);
         divesService = new DivesService(mySqlDiveRepositoryMock);
-        //user.setLastName("Howes");
+        user.setLastName("Howes");
 
         dive1 = new Dive();
         dive1.setLocation("Bull shark dive");

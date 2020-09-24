@@ -13,8 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -100,7 +98,12 @@ public class DivesApiControllerTest {
 
     @Test
     public void whenGettingDiveByLocationWithInvalidToken_thenReturnUnauthorizedUser() throws Exception {
-        doThrow(new InvalidTokenException("")).when(myTokenService).validateTokenByValue(INVALID_TOKEN);
+        /* prevent the tokenService from having its normal behaviour
+           --- why ?? ---
+        doThrow(new InvalidTokenException("A new InvalidTokenException is thrown"))
+                .when(myTokenService).validateTokenByValue(INVALID_TOKEN);
+         */
+
         mvc.perform(get("/api/user/logbook/dives/location/playa?token=" + INVALID_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized())
@@ -115,8 +118,6 @@ public class DivesApiControllerTest {
 
         given(divesService.getDiveByDate(date)).willReturn(dives);
 
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
         mvc.perform(get("/api/user/logbook/dives/date/2019-11-25?token=712052887")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -127,7 +128,11 @@ public class DivesApiControllerTest {
 
     @Test
     public void whenGettingDiveByDateWithInvalidToken_thenReturnUnauthorizedUser() throws Exception{
+        /* prevent the tokenService from having its normal behaviour
+           --- why ?? ---
         doThrow(new InvalidTokenException("")).when(myTokenService).validateTokenByValue(INVALID_TOKEN);
+         */
+
         mvc.perform(get("/api/user/logbook/dives/date/2019-11-25?token=" + INVALID_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized())

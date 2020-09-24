@@ -4,35 +4,35 @@ import com.andreahowes.dive_db.data.SecurityData.RoleRepository;
 import com.andreahowes.dive_db.data.SecurityData.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class UserServiceTest{
+public class UserServiceTest {
 
+    @Mock
+    User user;
 
-    @Autowired
-    private UserService userService;
+    @Mock
+    UserService userService;
 
-    private User user;
+    @Mock
+    UserRepository userRepository;
 
-    @MockBean
-    private UserRepository userRepository;
+    @Mock
+    RoleRepository roleRepository;
 
-    @MockBean
-    private RoleRepository roleRepository;
-
-    @MockBean
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Mock
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @BeforeEach
-    public void setUp() {
-        user = new User();
+    public User setUp() {
+        MockitoAnnotations.initMocks(this);
         user.setName("Bob");
         user.setEmail("Bob.bob@bob.com");
     }
@@ -46,9 +46,8 @@ public class UserServiceTest{
         assertThat(userByEmail).isEqualTo(user);
     }
 
-
-    //creates an instance of UserService at runtime.
-    //then use mockito to go through to userrepository
+    // creates an instance of UserService at runtime.
+    // then use mockito to go through to userRepository
 
     @TestConfiguration
     static class UserServiceConfiguration {
