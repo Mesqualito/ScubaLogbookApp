@@ -1,12 +1,10 @@
 package com.andreahowes.dive_db.data.SecurityData;
 
 import com.andreahowes.dive_db.logic.SecurityModule.JWT.Token;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.CrudRepository;
 
 
-@Repository("tokenRepository")
-public interface TokenRepository extends JpaRepository<Token, Integer> {
+public interface TokenRepository extends CrudRepository<Token, Integer> {
 
     boolean existsByValue(String value);
 
