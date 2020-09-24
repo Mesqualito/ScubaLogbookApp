@@ -1,12 +1,11 @@
 package com.andreahowes.dive_db.data.SecurityData;
 
 import com.andreahowes.dive_db.logic.SecurityModule.Role;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.CrudRepository;
 
-@Repository("roleRepository")
-public interface RoleRepository extends JpaRepository<Role, Integer> {
-    Role findByRole(String role);
+import java.util.Optional;
 
+public interface RoleRepository extends CrudRepository<Role, Integer> {
 
+    Optional<Role> findOneByDescription(String description);
 }

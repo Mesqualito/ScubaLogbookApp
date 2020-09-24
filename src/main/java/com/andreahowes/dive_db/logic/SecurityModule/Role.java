@@ -10,14 +10,15 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "role")
+@Table
 public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "role_id")
+    @Column
     private int id;
 
-    @Column(name = "role")
-    private String role;
+    @Column
+    private String description;
+
 }

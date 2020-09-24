@@ -1,14 +1,12 @@
 package com.andreahowes.dive_db.data.SecurityData;
 
 import com.andreahowes.dive_db.logic.SecurityModule.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.CrudRepository;
 
+import java.util.Optional;
 
-@Repository("userRepository")
-public interface UserRepository extends JpaRepository<User, Long> {
-    User findByEmail(String email);
+public interface UserRepository extends CrudRepository<User, Long> {
 
-    //User findByEmailAndPassword(String email, String password);
+    Optional<User> findByEmail(String email);
 
 }
