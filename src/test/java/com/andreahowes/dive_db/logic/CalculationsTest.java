@@ -1,8 +1,8 @@
 package com.andreahowes.dive_db.logic;
 
 import com.andreahowes.dive_db.logic.weather.Calculations;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,7 +12,7 @@ public class CalculationsTest {
     private Long sunrise;
     private Double temp;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         temp = 300.0;
     }

@@ -1,0 +1,30 @@
+# in IDEA Run-Configuration: set "Active Profile" to "dev"
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/divedb_dev?useSSL=false
+    username: divedb_dev_user
+    # in (local) dev it may not harm to set password here
+    password: password
+    platform: mysql
+  jpa:
+    hibernate:
+      # in dev: "validate" with "Spring Boot external" hibernate schema generation (below)
+      # or: "create-drop" for in-memory database
+      # ddl-auto: create-drop
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database: mysql
+    # in dev: show sql-statements for checks in logs
+    show-sql: true
+    # MySQL schema generation with hibernate:
+    # on first run: will build the script for dev-mysql-database in file 'mysql_create_database_schema.sql'
+    # in script file the semicolon at the end of each lines have to be added
+    # TODO: comment the following lines after script generation
+#    properties:
+#      javax:
+#        persistence:
+#          schema-generation:
+#            create-source: metadata
+#            scripts:
+#              action: create
+#              create-target: src/main/docker/mysql_create_database_schema.sql

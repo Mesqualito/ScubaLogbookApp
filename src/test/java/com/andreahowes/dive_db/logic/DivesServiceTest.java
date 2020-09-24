@@ -3,8 +3,8 @@ package com.andreahowes.dive_db.logic;
 import com.andreahowes.dive_db.data.dives.MySqlDiveRepository;
 import com.andreahowes.dive_db.logic.dive.Dive;
 import com.andreahowes.dive_db.logic.dive.DivesService;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.time.LocalDate;
@@ -30,7 +30,7 @@ public class DivesServiceTest {
     private int dive3Id = 3;
     //private User user;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         mySqlDiveRepositoryMock = Mockito.mock(MySqlDiveRepository.class);
         divesService = new DivesService(mySqlDiveRepositoryMock);
@@ -92,8 +92,7 @@ public class DivesServiceTest {
         when(mySqlDiveRepositoryMock.getDiveById(dive2Id)).thenReturn(dive2);
         Dive diveById = divesService.getDiveById(dive2Id);
 
-        assertThat(diveById)
-                .extracting("id").containsOnly(dive2Id);
+        assertThat(diveById).extracting("id").isEqualTo(dive2Id);
 
     }
 

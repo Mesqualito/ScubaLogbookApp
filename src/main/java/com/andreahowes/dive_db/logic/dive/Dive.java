@@ -1,5 +1,7 @@
 package com.andreahowes.dive_db.logic.dive;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -7,8 +9,12 @@ import java.time.LocalDate;
 public class Dive {
     private int id;
     private String user;
+
+    @JsonProperty("date")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
+
     private String location;
     private Double durationInMinutes;
     private Double maxDepthInMeters;

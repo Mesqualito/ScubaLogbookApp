@@ -3,8 +3,8 @@ package com.andreahowes.dive_db.logic;
 import com.andreahowes.dive_db.logic.dive.Dive;
 import com.andreahowes.dive_db.logic.dive.DivesService;
 import com.andreahowes.dive_db.logic.dive.StatisticsService;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class StatisticsServiceTest {
     private String user = "Howes";
 
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         Dive dive1 = new Dive();
         Dive dive2 = new Dive();

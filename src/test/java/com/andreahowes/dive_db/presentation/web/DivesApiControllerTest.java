@@ -5,15 +5,16 @@ import com.andreahowes.dive_db.logic.SecurityModule.JWT.MyTokenService;
 import com.andreahowes.dive_db.logic.dive.Dive;
 import com.andreahowes.dive_db.logic.dive.DivesService;
 import com.andreahowes.dive_db.presentation.api.DivesApiController;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -28,20 +29,26 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(value = DivesApiController.class, secure = false)
 public class DivesApiControllerTest {
 
-    private static final String INVALID_TOKEN = "12345";
-    @Autowired
-    private MockMvc mvc;
+    static final String INVALID_TOKEN = "12345";
 
-    @MockBean
-    private DivesService divesService;
+    MockMvc mvc;
 
-    @MockBean
-    private MyTokenService myTokenService;
+    DivesApiController controller;
 
+    @Mock
+    DivesService divesService;
+
+    @Mock
+    MyTokenService myTokenService;
+
+    @BeforeEach
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+        controller = new DivesApiController(divesService, myTokenService);
+        mvc = MockMvcBuilders.standaloneSetup(controller).build();
+    }
 
     @Test
     public void givenAllDives_whenGivenAllDives_thenReturnJsonArray() throws Exception {
@@ -92,7 +99,7 @@ public class DivesApiControllerTest {
     }
 
     @Test
-    public void whenGettingDiveByLocationWithInvalidToken_thenReturnUnauthorizedUser() throws Exception{
+    public void whenGettingDiveByLocationWithInvalidToken_thenReturnUnauthorizedUser() throws Exception {
         doThrow(new InvalidTokenException("")).when(myTokenService).validateTokenByValue(INVALID_TOKEN);
         mvc.perform(get("/api/user/logbook/dives/location/playa?token=" + INVALID_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -107,6 +114,8 @@ public class DivesApiControllerTest {
         List<Dive> dives = Arrays.asList(dive1);
 
         given(divesService.getDiveByDate(date)).willReturn(dives);
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         mvc.perform(get("/api/user/logbook/dives/date/2019-11-25?token=712052887")
                 .contentType(MediaType.APPLICATION_JSON))

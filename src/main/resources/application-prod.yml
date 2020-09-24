@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/divedb_prod
+    username: divedb_prod_user
+    # do NOT set password in the password-file in prod, use gitignored .env-files or env-variables at min.
+    # or even better: encryption!
+    password: password
+    platform: mysql
+  jpa:
+    hibernate:
+      # in production: do not allow ddl-changes through hibernate!
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database: mysql
+    # in prod: don't show sql-statements in logs
+    show-sql: false
